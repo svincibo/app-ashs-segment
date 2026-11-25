@@ -2,6 +2,50 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.262-blue.svg)](https://doi.org/10.25663/brainlife.app.262)
 
 # app-ashs-segment
+
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+> **Segments hippocampal subfields from co-registered T1-weighted and T2-weighted images with ASHS 2.0.0 (fast mode) and the UPenn PMC 3T atlas, outputting a volumetric parcellation.**
+
+Runs ashs_main.sh in segmentation mode with the selected atlas, then adds the left and right corrected subfield labels into one parcellation volume with a label.json. Use it for hippocampal subfield volumetry; the T1 and T2 must already be in register. The UPenn PMC atlas does not label the hippocampal head and tail.
+
+| | |
+|---|---|
+| 📥 **Inputs** | `neuro/anat/t1w` · `neuro/anat/t2w` |
+| 📤 **Outputs** | `neuro/parcellation/volume` · `neuro/ashs` |
+| 🐳 **Container** | `brainlife/ashs-upennpmc:2.0.0` |
+| ⚙️ **Resources** | 1 CPUs · 30 GB memory · 3 h walltime |
+| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.262](https://doi.org/10.25663/brainlife.app.262) |
+
+#### 📥 Inputs
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `t1` | `neuro/anat/t1w` | yes | t1 anatomical image used for hippocampus segmentation. Must be in register with the t2. |
+| `t2` | `neuro/anat/t2w` | yes | t2 anatomical image used for hippocampus segmentation. Must be in register with the t1. |
+
+#### 📤 Outputs
+
+| Output | Datatype | Description |
+|---|---|---|
+| `output-volume` | `neuro/parcellation/volume` | Hippocampal subfield parcellation (parc.nii.gz, left and right labels combined) with label.json. |
+| `output` | `neuro/ashs` | Raw ASHS working directory, including the final left/right subfield segmentations and snaplabels.txt. |
+
+<details>
+<summary><b>⚙️ Parameters</b> (1)</summary>
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `atlas` | enum |  | ASHS atlas used for segmentation; selects the ASHS container (UPenn PMC 3T atlas). Options: `UPENN-PMC-3t`. |
+
+</details>
+
+📚 **References used by this App:**
+- Yushkevich PA, Pluta J, Wang H, Ding SL, Xie L, Gertje E, Mancuso L, Kliot D, Das SR, Wolk DA. Automated Volumetry and Regional Thickness Analysis of Hippocampal Subfields and Medial Temporal Cortical Structures in Mild Cognitive Impairment. Human Brain Mapping (2015).
+- Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. Sci Data 6, 69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
+
+<!-- brainlife-app:end -->
+
 This app implements the "segmentation mode" (fast) Automated Hippocampus Segmentation Algorithm (ASHS), version 2.0.0. This algorithm uses ANTs to automatically label hippocampal subfields using MRI. 
 
 More information on ASHS can be found here: http://picsl.upenn.edu/software/ashs/
